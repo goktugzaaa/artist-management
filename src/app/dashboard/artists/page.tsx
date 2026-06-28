@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoArtists } from "@/lib/demo";
 import { createArtist, deleteArtist } from "@/lib/actions/artists";
 import type { Artist } from "@/lib/types/db";
 
 async function getArtists(): Promise<Artist[]> {
+  if (!isSupabaseConfigured()) return demoArtists;
   try {
     const supabase = await createClient();
     const { data } = await supabase

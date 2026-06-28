@@ -1,11 +1,21 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoArtists, demoProjects, demoServices, demoMeetings } from "@/lib/demo";
 import { WeeklyTrendChart, StatusChart } from "@/components/charts";
 import {
   getWeeklyTrend, getProjectStatus, getUpcomingDeadlines, getAtRisk,
 } from "@/lib/dashboard";
 
+const DEMO_COUNTS: Record<string, number> = {
+  artists: demoArtists.length,
+  projects: demoProjects.length,
+  services: demoServices.length,
+  meetings: demoMeetings.length,
+};
+
 async function safeCount(table: string): Promise<number> {
+  if (!isSupabaseConfigured()) return DEMO_COUNTS[table] ?? 0;
   try {
     const supabase = await createClient();
     const { count } = await supabase.from(table).select("*", { count: "exact", head: true });

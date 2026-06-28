@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoMeetings } from "@/lib/demo";
 import { getArtistsLite, getProjectsLite } from "@/lib/queries";
 import { createMeeting, deleteMeeting } from "@/lib/actions/meetings";
 import { Field, Select, TextArea, SubmitButton } from "@/components/form";
@@ -13,6 +15,7 @@ interface Row {
 }
 
 async function getMeetings(): Promise<Row[]> {
+  if (!isSupabaseConfigured()) return demoMeetings;
   try {
     const supabase = await createClient();
     const { data } = await supabase

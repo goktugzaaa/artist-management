@@ -3,8 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
 
 export async function createArtist(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
 
   const payload = {
@@ -24,6 +26,7 @@ export async function createArtist(formData: FormData) {
 }
 
 export async function updateArtist(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
   const id = String(formData.get("id") ?? "");
   const name = String(formData.get("name") ?? "").trim();
@@ -50,6 +53,7 @@ export async function updateArtist(formData: FormData) {
 }
 
 export async function deleteArtist(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const id = String(formData.get("id"));
   const supabase = await createClient();
   await supabase.from("artists").delete().eq("id", id);

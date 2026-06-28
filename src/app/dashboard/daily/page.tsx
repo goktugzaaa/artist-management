@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoDaily } from "@/lib/demo";
 import { getArtistsLite, getProjectsLite } from "@/lib/queries";
 import { createDailyLog, deleteDailyLog } from "@/lib/actions/daily";
 import { Field, Select, TextArea, SubmitButton, enumOptions } from "@/components/form";
@@ -8,6 +10,7 @@ import type { DailyLog } from "@/lib/types/db";
 type Row = DailyLog & { artists: { name: string } | null; projects: { name: string } | null };
 
 async function getLogs(): Promise<Row[]> {
+  if (!isSupabaseConfigured()) return demoDaily;
   try {
     const supabase = await createClient();
     const { data } = await supabase

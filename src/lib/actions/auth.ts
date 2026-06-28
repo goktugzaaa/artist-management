@@ -2,8 +2,10 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
 
 export async function signIn(formData: FormData) {
+  if (!isSupabaseConfigured()) redirect("/dashboard");
   const email = String(formData.get("email"));
   const password = String(formData.get("password"));
 
@@ -17,6 +19,7 @@ export async function signIn(formData: FormData) {
 }
 
 export async function signOut() {
+  if (!isSupabaseConfigured()) redirect("/dashboard");
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/login");

@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoProjects } from "@/lib/demo";
 import { getArtistsLite } from "@/lib/queries";
 import { createProject, deleteProject } from "@/lib/actions/projects";
 import { Field, Select, TextArea, SubmitButton, enumOptions } from "@/components/form";
@@ -8,6 +10,7 @@ import type { Project } from "@/lib/types/db";
 type Row = Project & { artists: { name: string } | null };
 
 async function getProjects(): Promise<Row[]> {
+  if (!isSupabaseConfigured()) return demoProjects;
   try {
     const supabase = await createClient();
     const { data } = await supabase

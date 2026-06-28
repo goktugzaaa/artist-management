@@ -2,10 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
 
 const PATH = "/dashboard/weekly";
 
 export async function createWeeklyPlan(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
   const artist_id = String(formData.get("artist_id") ?? "");
   const week_start = nz(formData.get("week_start"));
@@ -24,6 +26,7 @@ export async function createWeeklyPlan(formData: FormData) {
 }
 
 export async function deleteWeeklyPlan(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
   await supabase.from("weekly_plans").delete().eq("id", String(formData.get("id")));
   revalidatePath(PATH);

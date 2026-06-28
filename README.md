@@ -4,6 +4,19 @@ Sanatci yonetim, proje planlama ve operasyon platformu. Next.js 16 + Supabase.
 
 Mimari ve yol haritasi: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
 
+## Demo modu (Supabase olmadan)
+
+Env yoksa uygulama **offline demo modunda** calisir: ornek veriyle dolu, auth yok,
+tum ekranlar gezilebilir. Kayit ekleme/silme kapali (salt okunur).
+
+```bash
+npm install
+npm run dev
+# http://localhost:3000 -> /dashboard (login gerekmez)
+```
+
+Gercek veri + kayit icin Supabase bagla (asagi).
+
 ## Kurulum
 
 1. Bagimliliklar:

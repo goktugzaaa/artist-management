@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoWeekly } from "@/lib/demo";
 import { getArtistsLite } from "@/lib/queries";
 import { createWeeklyPlan, deleteWeeklyPlan } from "@/lib/actions/weekly";
 import { Field, Select, TextArea, SubmitButton, enumOptions } from "@/components/form";
@@ -8,6 +10,7 @@ import type { WeeklyPlan } from "@/lib/types/db";
 type Row = WeeklyPlan & { artists: { name: string } | null };
 
 async function getPlans(): Promise<Row[]> {
+  if (!isSupabaseConfigured()) return demoWeekly;
   try {
     const supabase = await createClient();
     const { data } = await supabase

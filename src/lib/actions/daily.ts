@@ -2,10 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
 
 const PATH = "/dashboard/daily";
 
 export async function createDailyLog(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
   const artist_id = String(formData.get("artist_id") ?? "");
   if (!artist_id) return;
@@ -27,6 +29,7 @@ export async function createDailyLog(formData: FormData) {
 }
 
 export async function deleteDailyLog(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
   await supabase.from("daily_logs").delete().eq("id", String(formData.get("id")));
   revalidatePath(PATH);

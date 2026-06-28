@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoArtist, demoByTable } from "@/lib/demo";
 import type { Artist } from "@/lib/types/db";
 import {
   projectStatusLabel, priorityLabel, planStatusLabel,
@@ -8,6 +10,7 @@ import {
 } from "@/lib/labels";
 
 async function getArtist(id: string): Promise<Artist | null> {
+  if (!isSupabaseConfigured()) return demoArtist(id);
   try {
     const supabase = await createClient();
     const { data } = await supabase.from("artists").select("*").eq("id", id).single();
@@ -18,6 +21,9 @@ async function getArtist(id: string): Promise<Artist | null> {
 }
 
 async function getChild<T>(table: string, id: string, select: string, orderCol: string): Promise<T[]> {
+  if (!isSupabaseConfigured()) {
+    return (demoByTable[table]?.filter((r) => r.artist_id === id) as unknown as T[]) ?? [];
+  }
   try {
     const supabase = await createClient();
     const { data } = await supabase

@@ -1,7 +1,14 @@
 // Server-side aggregations for the dashboard. All resilient to a missing DB.
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoWeekly, demoProjects } from "@/lib/demo";
 import { projectStatusLabel } from "@/lib/labels";
 import type { ProjectStatus } from "@/lib/types/db";
+
+const DEMO_ROWS: Record<string, unknown[]> = {
+  weekly_plans: demoWeekly,
+  projects: demoProjects,
+};
 
 export interface WeeklyTrendPoint {
   week: string;
@@ -28,6 +35,9 @@ export interface RiskRow {
 }
 
 async function rows<T>(table: string, select: string): Promise<T[]> {
+  if (!isSupabaseConfigured()) {
+    return (DEMO_ROWS[table] as T[]) ?? [];
+  }
   try {
     const supabase = await createClient();
     const { data } = await supabase.from(table).select(select);

@@ -1,9 +1,15 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isSupabaseConfigured } from "@/lib/config";
 
 // Refreshes the Supabase auth session on every request and guards app routes.
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
+
+  // Offline demo mode: no auth, everything browsable.
+  if (!isSupabaseConfigured()) {
+    return response;
+  }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

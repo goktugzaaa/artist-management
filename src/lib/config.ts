@@ -1,0 +1,8 @@
+// True only when real Supabase credentials are present. When false, the app
+// runs in offline demo mode (read-only sample data, no auth).
+export function isSupabaseConfigured(): boolean {
+  return Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  );
+}

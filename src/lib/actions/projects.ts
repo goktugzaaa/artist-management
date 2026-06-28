@@ -2,10 +2,12 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
 
 const PATH = "/dashboard/projects";
 
 export async function createProject(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
   const artist_id = String(formData.get("artist_id") ?? "");
   const name = String(formData.get("name") ?? "").trim();
@@ -23,6 +25,7 @@ export async function createProject(formData: FormData) {
 }
 
 export async function deleteProject(formData: FormData) {
+  if (!isSupabaseConfigured()) return;
   const supabase = await createClient();
   await supabase.from("projects").delete().eq("id", String(formData.get("id")));
   revalidatePath(PATH);

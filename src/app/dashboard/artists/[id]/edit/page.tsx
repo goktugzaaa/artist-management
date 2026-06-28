@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/config";
+import { demoArtist } from "@/lib/demo";
 import { updateArtist } from "@/lib/actions/artists";
 import { Field, TextArea, SubmitButton } from "@/components/form";
 import type { Artist } from "@/lib/types/db";
 
 async function getArtist(id: string): Promise<Artist | null> {
+  if (!isSupabaseConfigured()) return demoArtist(id);
   try {
     const supabase = await createClient();
     const { data } = await supabase.from("artists").select("*").eq("id", id).single();
