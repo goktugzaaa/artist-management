@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 import { demoDaily } from "@/lib/demo";
@@ -78,10 +79,15 @@ export default async function DailyPage() {
                 <td className="px-4 py-3 text-muted">{taskOwnerLabel[l.owner]}</td>
                 <td className="px-4 py-3 text-muted">{taskStatusLabel[l.status]}</td>
                 <td className="px-4 py-3 text-right">
-                  <form action={deleteDailyLog}>
-                    <input type="hidden" name="id" value={l.id} />
-                    <button className="text-xs text-red-500 hover:underline">Sil</button>
-                  </form>
+                  <div className="flex items-center justify-end gap-3">
+                    <Link href={`/dashboard/daily/${l.id}/edit`} className="text-xs text-accent hover:underline">
+                      Duzenle
+                    </Link>
+                    <form action={deleteDailyLog}>
+                      <input type="hidden" name="id" value={l.id} />
+                      <button className="text-xs text-red-500 hover:underline">Sil</button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             ))}

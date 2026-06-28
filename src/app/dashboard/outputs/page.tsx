@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 import { demoOutputs } from "@/lib/demo";
@@ -84,10 +85,15 @@ export default async function OutputsPage() {
                   ) : "-"}
                 </td>
                 <td className="px-4 py-3 text-right">
-                  <form action={deleteOutput}>
-                    <input type="hidden" name="id" value={o.id} />
-                    <button className="text-xs text-red-500 hover:underline">Sil</button>
-                  </form>
+                  <div className="flex items-center justify-end gap-3">
+                    <Link href={`/dashboard/outputs/${o.id}/edit`} className="text-xs text-accent hover:underline">
+                      Duzenle
+                    </Link>
+                    <form action={deleteOutput}>
+                      <input type="hidden" name="id" value={o.id} />
+                      <button className="text-xs text-red-500 hover:underline">Sil</button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             ))}

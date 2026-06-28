@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 
@@ -22,6 +23,27 @@ export async function createMeeting(formData: FormData) {
     next_action: nz(formData.get("next_action")),
   });
   revalidatePath(PATH);
+}
+
+export async function updateMeeting(formData: FormData) {
+  if (!isSupabaseConfigured()) redirect(PATH);
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "");
+  if (!id) return;
+
+  await supabase
+    .from("meetings")
+    .update({
+      project_id: nz(formData.get("project_id")),
+      meeting_date: nz(formData.get("meeting_date")) ?? new Date().toISOString().slice(0, 10),
+      decisions: nz(formData.get("decisions")),
+      comments: nz(formData.get("comments")),
+      mood: nz(formData.get("mood")),
+      next_action: nz(formData.get("next_action")),
+    })
+    .eq("id", id);
+  revalidatePath(PATH);
+  redirect(PATH);
 }
 
 export async function deleteMeeting(formData: FormData) {

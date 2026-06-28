@@ -96,3 +96,9 @@ export const demoByTable: Record<string, { artist_id: string }[]> = {
 export function demoArtist(id: string): Artist | null {
   return demoArtists.find((a) => a.id === id) ?? null;
 }
+
+// Single demo row by table + id, for entity edit pages.
+export function demoRow<T>(table: string, id: string): T | null {
+  const rows = demoByTable[table] as unknown as { id: string }[] | undefined;
+  return (rows?.find((r) => r.id === id) as T) ?? null;
+}

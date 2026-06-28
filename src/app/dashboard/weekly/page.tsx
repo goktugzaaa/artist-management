@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 import { demoWeekly } from "@/lib/demo";
@@ -76,10 +77,15 @@ export default async function WeeklyPage() {
                   </td>
                   <td className="px-4 py-3 text-muted">{planStatusLabel[p.status]}</td>
                   <td className="px-4 py-3 text-right">
-                    <form action={deleteWeeklyPlan}>
-                      <input type="hidden" name="id" value={p.id} />
-                      <button className="text-xs text-red-500 hover:underline">Sil</button>
-                    </form>
+                    <div className="flex items-center justify-end gap-3">
+                      <Link href={`/dashboard/weekly/${p.id}/edit`} className="text-xs text-accent hover:underline">
+                        Duzenle
+                      </Link>
+                      <form action={deleteWeeklyPlan}>
+                        <input type="hidden" name="id" value={p.id} />
+                        <button className="text-xs text-red-500 hover:underline">Sil</button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
               );

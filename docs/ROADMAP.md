@@ -26,8 +26,9 @@ Durum isaretleri: `[x]` bitti · `[~]` devam · `[ ]` bekliyor
 - [x] Ciktilar (link)
 - [x] Sanatci detay sayfasi (tek panel: profil+projeler+haftalik+gunluk+toplanti+cikti+hizmet)
 - [x] Sanatci duzenle (update)
-- [ ] Diger ekranlar icin update/edit (proje, gunluk, vb.)
+- [x] Tum ekranlarda update/edit (proje, gunluk, haftalik, hizmet, toplanti, cikti)
 - [ ] shadcn/ui standardina gecis (tablo/form/dialog)
+- [ ] Tasarim: yapisal elden gecirme (renk degil; layout/komponent/derinlik)
 
 ## Faz 3 — Gorsellestirme  `[~]`
 - [x] Dashboard grafikleri (Recharts): haftalik saat trendi, proje durum dagilimi

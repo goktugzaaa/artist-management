@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 import { demoProjects } from "@/lib/demo";
@@ -67,10 +68,15 @@ export default async function ProjectsPage() {
                 <td className="px-4 py-3 text-muted">{priorityLabel[p.priority]}</td>
                 <td className="px-4 py-3 text-muted">{p.deadline ?? "-"}</td>
                 <td className="px-4 py-3 text-right">
-                  <form action={deleteProject}>
-                    <input type="hidden" name="id" value={p.id} />
-                    <button className="text-xs text-red-500 hover:underline">Sil</button>
-                  </form>
+                  <div className="flex items-center justify-end gap-3">
+                    <Link href={`/dashboard/projects/${p.id}/edit`} className="text-xs text-accent hover:underline">
+                      Duzenle
+                    </Link>
+                    <form action={deleteProject}>
+                      <input type="hidden" name="id" value={p.id} />
+                      <button className="text-xs text-red-500 hover:underline">Sil</button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             ))}

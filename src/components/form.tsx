@@ -59,11 +59,13 @@ export function Select({
   label,
   options,
   required = false,
+  defaultValue,
 }: {
   name: string;
   label: string;
   options: { value: string; label: string }[];
   required?: boolean;
+  defaultValue?: string;
 }) {
   return (
     <div>
@@ -71,6 +73,7 @@ export function Select({
       <select
         name={name}
         required={required}
+        defaultValue={defaultValue}
         className="mt-1 w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
       >
         <option value="">-</option>

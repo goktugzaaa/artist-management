@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 
@@ -26,6 +27,31 @@ export async function createDailyLog(formData: FormData) {
     next_micro_step: nz(formData.get("next_micro_step")),
   });
   revalidatePath(PATH);
+}
+
+export async function updateDailyLog(formData: FormData) {
+  if (!isSupabaseConfigured()) redirect(PATH);
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "");
+  if (!id) return;
+
+  await supabase
+    .from("daily_logs")
+    .update({
+      project_id: nz(formData.get("project_id")),
+      log_date: nz(formData.get("log_date")) ?? new Date().toISOString().slice(0, 10),
+      hours: Number(formData.get("hours") || 0),
+      done: nz(formData.get("done")),
+      todo: nz(formData.get("todo")),
+      blockers: nz(formData.get("blockers")),
+      owner: String(formData.get("owner") || "self"),
+      status: String(formData.get("status") || "in_progress"),
+      priority: String(formData.get("priority") || "medium"),
+      next_micro_step: nz(formData.get("next_micro_step")),
+    })
+    .eq("id", id);
+  revalidatePath(PATH);
+  redirect(PATH);
 }
 
 export async function deleteDailyLog(formData: FormData) {

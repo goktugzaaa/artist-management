@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 import { demoMeetings } from "@/lib/demo";
@@ -77,10 +78,15 @@ export default async function MeetingsPage() {
                 <td className="px-4 py-3 text-muted">{m.mood ?? "-"}</td>
                 <td className="px-4 py-3 max-w-xs truncate text-muted">{m.next_action ?? "-"}</td>
                 <td className="px-4 py-3 text-right">
-                  <form action={deleteMeeting}>
-                    <input type="hidden" name="id" value={m.id} />
-                    <button className="text-xs text-red-500 hover:underline">Sil</button>
-                  </form>
+                  <div className="flex items-center justify-end gap-3">
+                    <Link href={`/dashboard/meetings/${m.id}/edit`} className="text-xs text-accent hover:underline">
+                      Duzenle
+                    </Link>
+                    <form action={deleteMeeting}>
+                      <input type="hidden" name="id" value={m.id} />
+                      <button className="text-xs text-red-500 hover:underline">Sil</button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             ))}

@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 
@@ -23,6 +24,28 @@ export async function createOutput(formData: FormData) {
     link: nz(formData.get("link")),
   });
   revalidatePath(PATH);
+}
+
+export async function updateOutput(formData: FormData) {
+  if (!isSupabaseConfigured()) redirect(PATH);
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "");
+  const title = String(formData.get("title") ?? "").trim();
+  if (!id || !title) return;
+
+  await supabase
+    .from("outputs")
+    .update({
+      project_id: nz(formData.get("project_id")),
+      type: String(formData.get("type") || "portfolio"),
+      title,
+      status: String(formData.get("status") || "todo"),
+      link: nz(formData.get("link")),
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+  revalidatePath(PATH);
+  redirect(PATH);
 }
 
 export async function deleteOutput(formData: FormData) {

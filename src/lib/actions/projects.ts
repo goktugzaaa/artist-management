@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 
@@ -22,6 +23,28 @@ export async function createProject(formData: FormData) {
     deadline: nz(formData.get("deadline")),
   });
   revalidatePath(PATH);
+}
+
+export async function updateProject(formData: FormData) {
+  if (!isSupabaseConfigured()) redirect(PATH);
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "");
+  const name = String(formData.get("name") ?? "").trim();
+  if (!id || !name) return;
+
+  await supabase
+    .from("projects")
+    .update({
+      name,
+      description: nz(formData.get("description")),
+      status: String(formData.get("status") || "planned"),
+      priority: String(formData.get("priority") || "medium"),
+      deadline: nz(formData.get("deadline")),
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+  revalidatePath(PATH);
+  redirect(PATH);
 }
 
 export async function deleteProject(formData: FormData) {

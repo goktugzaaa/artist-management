@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 
@@ -23,6 +24,26 @@ export async function createWeeklyPlan(formData: FormData) {
     review: nz(formData.get("review")),
   });
   revalidatePath(PATH);
+}
+
+export async function updateWeeklyPlan(formData: FormData) {
+  if (!isSupabaseConfigured()) redirect(PATH);
+  const supabase = await createClient();
+  const id = String(formData.get("id") ?? "");
+  if (!id) return;
+
+  await supabase
+    .from("weekly_plans")
+    .update({
+      focus: nz(formData.get("focus")),
+      planned_hours: Number(formData.get("planned_hours") || 0),
+      actual_hours: Number(formData.get("actual_hours") || 0),
+      status: String(formData.get("status") || "planned"),
+      review: nz(formData.get("review")),
+    })
+    .eq("id", id);
+  revalidatePath(PATH);
+  redirect(PATH);
 }
 
 export async function deleteWeeklyPlan(formData: FormData) {
