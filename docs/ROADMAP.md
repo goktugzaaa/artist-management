@@ -24,15 +24,17 @@ Durum isaretleri: `[x]` bitti · `[~]` devam · `[ ]` bekliyor
 - [x] Dis Hizmetler (butce toplami)
 - [x] Toplantilar
 - [x] Ciktilar (link)
+- [x] Sanatci detay sayfasi (tek panel: profil+projeler+haftalik+gunluk+toplanti+cikti+hizmet)
+- [x] Sanatci duzenle (update)
+- [ ] Diger ekranlar icin update/edit (proje, gunluk, vb.)
 - [ ] shadcn/ui standardina gecis (tablo/form/dialog)
-- [ ] Sanatci detay sayfasi (tek panel: projeler+toplantilar+ciktilar)
-- [ ] Inline edit (su an create + delete var, update yok)
 
-## Faz 3 — Gorsellestirme  `[ ]`
+## Faz 3 — Gorsellestirme  `[~]`
+- [x] Dashboard grafikleri (Recharts): haftalik saat trendi, proje durum dagilimi
+- [x] Hesaplamalar: planlanan vs gerceklesen saat, risk skoru (%60 alti)
+- [x] Yaklasan teslimler (14 gun) + risk listesi
 - [ ] Kanban (proje/gorev surukle-birak)
 - [ ] Takvim (deadline + toplanti)
-- [ ] Dashboard grafikleri (Recharts): saat trendi, durum dagilimi
-- [ ] Hesaplamalar: planlanan vs gerceklesen saat, risk skoru
 - [ ] Filtre/arama/siralama (TanStack Table)
 
 ## Faz 4 — Otomasyon  `[ ]`
