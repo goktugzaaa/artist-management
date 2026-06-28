@@ -1,6 +1,7 @@
 // Sidebar navigation — mirrors the 9 Excel sheets.
 export const navItems = [
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/dashboard/alerts", label: "Uyarilar" },
   { href: "/dashboard/artists", label: "Sanatcilar" },
   { href: "/dashboard/projects", label: "Projeler" },
   { href: "/dashboard/weekly", label: "Haftalik Plan" },

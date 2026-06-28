@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navItems } from "@/lib/nav";
 
-export function Sidebar() {
+export function Sidebar({ alertCount = 0 }: { alertCount?: number }) {
   const pathname = usePathname();
 
   return (
@@ -14,17 +14,23 @@ export function Sidebar() {
           item.href === "/dashboard"
             ? pathname === "/dashboard"
             : pathname.startsWith(item.href);
+        const badge = item.href === "/dashboard/alerts" && alertCount > 0 ? alertCount : null;
         return (
           <Link
             key={item.href}
             href={item.href}
-            className={`rounded-lg px-3 py-2 text-sm transition ${
+            className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition ${
               active
                 ? "bg-neutral-900 text-white"
                 : "text-neutral-600 hover:bg-neutral-100"
             }`}
           >
-            {item.label}
+            <span>{item.label}</span>
+            {badge && (
+              <span className="rounded-full bg-red-500 px-2 py-0.5 text-xs font-medium text-white">
+                {badge}
+              </span>
+            )}
           </Link>
         );
       })}

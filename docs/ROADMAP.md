@@ -37,14 +37,16 @@ Durum isaretleri: `[x]` bitti · `[~]` devam · `[ ]` bekliyor
 - [ ] Takvim (deadline + toplanti)
 - [ ] Filtre/arama/siralama (TanStack Table)
 
-## Faz 4 — Otomasyon  `[ ]`
-- [ ] `notifications` tablosu
-- [ ] Cron edge functions:
-  - [ ] 10 gun giris yok -> hatirlatma
-  - [ ] Deadline 3 gun -> bildirim
-  - [ ] Haftalik saat < %60 -> risk
-  - [ ] Portfolyo 6 ay eski -> hatirlatma
+## Faz 4 — Otomasyon  `[~]`
+- [x] Uyari motoru (lib/alerts.ts) — okuma aninda hesaplanir, demo+canli
+  - [x] Deadline <= 3 gun
+  - [x] Haftalik saat < %60
+  - [x] 10+ gun gunluk kayit yok
+- [x] Uyari merkezi sayfasi + sidebar rozet (sayac)
+- [ ] `notifications` tablosu (snapshot + okundu durumu)
+- [ ] Cron edge function (uyarilari periyodik snapshot)
 - [ ] E-posta entegrasyonu (Resend / Supabase)
+- [ ] Portfolyo 6 ay eski -> hatirlatma
 
 ## Faz 5 — AI Katmani  `[ ]`
 - [ ] Toplanti notu -> haftalik plan onerisi

@@ -2,6 +2,7 @@ import { Sidebar } from "@/components/sidebar";
 import { signOut } from "@/lib/actions/auth";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
+import { getAlerts } from "@/lib/alerts";
 
 export default async function DashboardLayout({
   children,
@@ -18,6 +19,8 @@ export default async function DashboardLayout({
     email = user?.email;
   }
 
+  const alertCount = (await getAlerts()).length;
+
   return (
     <div className="flex min-h-screen bg-neutral-50">
       <aside className="flex w-60 flex-col justify-between border-r border-neutral-200 bg-white p-4">
@@ -27,7 +30,7 @@ export default async function DashboardLayout({
             <p className="text-xs text-neutral-400">Sanatci Yonetim</p>
           </div>
           <div className="mt-4">
-            <Sidebar />
+            <Sidebar alertCount={alertCount} />
           </div>
         </div>
 
