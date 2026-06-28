@@ -36,7 +36,8 @@ Durum isaretleri: `[x]` bitti · `[~]` devam · `[ ]` bekliyor
 - [x] Yaklasan teslimler (14 gun) + risk listesi
 - [ ] Kanban (proje/gorev surukle-birak)
 - [ ] Takvim (deadline + toplanti)
-- [ ] Filtre/arama/siralama (TanStack Table)
+- [x] Arama/filtre (canli, URL ?q=, tum liste ekranlari)
+- [ ] Siralama + TanStack Table
 
 ## Faz 4 — Otomasyon  `[~]`
 - [x] Uyari motoru (lib/alerts.ts) — okuma aninda hesaplanir, demo+canli

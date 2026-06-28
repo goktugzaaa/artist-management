@@ -5,6 +5,8 @@ import { demoProjects } from "@/lib/demo";
 import { getArtistsLite } from "@/lib/queries";
 import { createProject, deleteProject } from "@/lib/actions/projects";
 import { Field, Select, TextArea, SubmitButton, enumOptions } from "@/components/form";
+import { SearchBox } from "@/components/search-box";
+import { filterByQuery } from "@/lib/search";
 import { projectStatusLabel, priorityLabel } from "@/lib/labels";
 import type { Project } from "@/lib/types/db";
 
@@ -24,14 +26,23 @@ async function getProjects(): Promise<Row[]> {
   }
 }
 
-export default async function ProjectsPage() {
-  const [projects, artists] = await Promise.all([getProjects(), getArtistsLite()]);
+export default async function ProjectsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const [all, artists] = await Promise.all([getProjects(), getArtistsLite()]);
+  const projects = filterByQuery(all, q, (p) => [p.name, p.artists?.name, p.description]);
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">Projeler</h1>
-        <p className="mt-1 text-sm text-muted">{projects.length} kayit</p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">Projeler</h1>
+          <p className="mt-1 text-sm text-muted">{projects.length} kayit</p>
+        </div>
+        <SearchBox placeholder="Proje ara..." />
       </div>
 
       <form action={createProject} className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2">

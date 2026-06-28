@@ -5,6 +5,8 @@ import { demoMeetings } from "@/lib/demo";
 import { getArtistsLite, getProjectsLite } from "@/lib/queries";
 import { createMeeting, deleteMeeting } from "@/lib/actions/meetings";
 import { Field, Select, TextArea, SubmitButton } from "@/components/form";
+import { SearchBox } from "@/components/search-box";
+import { filterByQuery } from "@/lib/search";
 
 interface Row {
   id: string;
@@ -29,18 +31,27 @@ async function getMeetings(): Promise<Row[]> {
   }
 }
 
-export default async function MeetingsPage() {
-  const [meetings, artists, projects] = await Promise.all([
+export default async function MeetingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const [all, artists, projects] = await Promise.all([
     getMeetings(),
     getArtistsLite(),
     getProjectsLite(),
   ]);
+  const meetings = filterByQuery(all, q, (m) => [m.artists?.name, m.decisions, m.mood, m.next_action]);
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">Toplantilar</h1>
-        <p className="mt-1 text-sm text-muted">{meetings.length} kayit</p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">Toplantilar</h1>
+          <p className="mt-1 text-sm text-muted">{meetings.length} kayit</p>
+        </div>
+        <SearchBox placeholder="Toplanti ara..." />
       </div>
 
       <form action={createMeeting} className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2">

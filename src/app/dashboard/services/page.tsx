@@ -5,6 +5,8 @@ import { demoServices } from "@/lib/demo";
 import { getArtistsLite, getProjectsLite } from "@/lib/queries";
 import { createService, deleteService } from "@/lib/actions/services";
 import { Field, Select, TextArea, SubmitButton, enumOptions } from "@/components/form";
+import { SearchBox } from "@/components/search-box";
+import { filterByQuery } from "@/lib/search";
 import { serviceTypeLabel, serviceStatusLabel } from "@/lib/labels";
 import type { ServiceType, ServiceStatus } from "@/lib/types/db";
 
@@ -32,21 +34,30 @@ async function getServices(): Promise<Row[]> {
   }
 }
 
-export default async function ServicesPage() {
-  const [services, artists, projects] = await Promise.all([
+export default async function ServicesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const [all, artists, projects] = await Promise.all([
     getServices(),
     getArtistsLite(),
     getProjectsLite(),
   ]);
+  const services = filterByQuery(all, q, (s) => [s.artists?.name, s.vendor, serviceTypeLabel[s.type]]);
   const totalBudget = services.reduce((s, r) => s + Number(r.budget), 0);
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">Dis Hizmetler</h1>
-        <p className="mt-1 text-sm text-muted">
-          {services.length} kayit · toplam butce {totalBudget.toLocaleString("tr-TR")}
-        </p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">Dis Hizmetler</h1>
+          <p className="mt-1 text-sm text-muted">
+            {services.length} kayit · toplam butce {totalBudget.toLocaleString("tr-TR")}
+          </p>
+        </div>
+        <SearchBox placeholder="Hizmet ara..." />
       </div>
 
       <form action={createService} className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2">

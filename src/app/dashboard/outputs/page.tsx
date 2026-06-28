@@ -5,6 +5,8 @@ import { demoOutputs } from "@/lib/demo";
 import { getArtistsLite, getProjectsLite } from "@/lib/queries";
 import { createOutput, deleteOutput } from "@/lib/actions/outputs";
 import { Field, Select, SubmitButton, enumOptions } from "@/components/form";
+import { SearchBox } from "@/components/search-box";
+import { filterByQuery } from "@/lib/search";
 import { outputTypeLabel, taskStatusLabel } from "@/lib/labels";
 import type { OutputType, TaskStatus } from "@/lib/types/db";
 
@@ -31,18 +33,27 @@ async function getOutputs(): Promise<Row[]> {
   }
 }
 
-export default async function OutputsPage() {
-  const [outputs, artists, projects] = await Promise.all([
+export default async function OutputsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const [all, artists, projects] = await Promise.all([
     getOutputs(),
     getArtistsLite(),
     getProjectsLite(),
   ]);
+  const outputs = filterByQuery(all, q, (o) => [o.title, o.artists?.name, outputTypeLabel[o.type]]);
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">Ciktilar</h1>
-        <p className="mt-1 text-sm text-muted">{outputs.length} kayit</p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">Ciktilar</h1>
+          <p className="mt-1 text-sm text-muted">{outputs.length} kayit</p>
+        </div>
+        <SearchBox placeholder="Cikti ara..." />
       </div>
 
       <form action={createOutput} className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2">

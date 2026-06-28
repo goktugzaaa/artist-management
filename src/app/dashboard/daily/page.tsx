@@ -5,6 +5,8 @@ import { demoDaily } from "@/lib/demo";
 import { getArtistsLite, getProjectsLite } from "@/lib/queries";
 import { createDailyLog, deleteDailyLog } from "@/lib/actions/daily";
 import { Field, Select, TextArea, SubmitButton, enumOptions } from "@/components/form";
+import { SearchBox } from "@/components/search-box";
+import { filterByQuery } from "@/lib/search";
 import { taskOwnerLabel, taskStatusLabel, priorityLabel } from "@/lib/labels";
 import type { DailyLog } from "@/lib/types/db";
 
@@ -24,18 +26,27 @@ async function getLogs(): Promise<Row[]> {
   }
 }
 
-export default async function DailyPage() {
-  const [logs, artists, projects] = await Promise.all([
+export default async function DailyPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const [all, artists, projects] = await Promise.all([
     getLogs(),
     getArtistsLite(),
     getProjectsLite(),
   ]);
+  const logs = filterByQuery(all, q, (l) => [l.artists?.name, l.projects?.name, l.done, l.todo]);
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">Gunluk Takip</h1>
-        <p className="mt-1 text-sm text-muted">{logs.length} kayit</p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">Gunluk Takip</h1>
+          <p className="mt-1 text-sm text-muted">{logs.length} kayit</p>
+        </div>
+        <SearchBox placeholder="Kayit ara..." />
       </div>
 
       <form action={createDailyLog} className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2">

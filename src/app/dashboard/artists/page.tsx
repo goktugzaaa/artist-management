@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/config";
 import { demoArtists } from "@/lib/demo";
 import { createArtist, deleteArtist } from "@/lib/actions/artists";
+import { SearchBox } from "@/components/search-box";
+import { filterByQuery } from "@/lib/search";
 import type { Artist } from "@/lib/types/db";
 
 async function getArtists(): Promise<Artist[]> {
@@ -19,14 +21,23 @@ async function getArtists(): Promise<Artist[]> {
   }
 }
 
-export default async function ArtistsPage() {
-  const artists = await getArtists();
+export default async function ArtistsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  const all = await getArtists();
+  const artists = filterByQuery(all, q, (a) => [a.name, a.specialty, a.email]);
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-ink">Sanatcilar</h1>
-        <p className="mt-1 text-sm text-muted">{artists.length} kayit</p>
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-semibold text-ink">Sanatcilar</h1>
+          <p className="mt-1 text-sm text-muted">{artists.length} kayit</p>
+        </div>
+        <SearchBox placeholder="Sanatci ara..." />
       </div>
 
       {/* Create form */}
