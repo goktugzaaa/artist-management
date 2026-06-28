@@ -1,0 +1,90 @@
+import { createClient } from "@/lib/supabase/server";
+import { getArtistsLite, getProjectsLite } from "@/lib/queries";
+import { createDailyLog, deleteDailyLog } from "@/lib/actions/daily";
+import { Field, Select, TextArea, SubmitButton, enumOptions } from "@/components/form";
+import { taskOwnerLabel, taskStatusLabel, priorityLabel } from "@/lib/labels";
+import type { DailyLog } from "@/lib/types/db";
+
+type Row = DailyLog & { artists: { name: string } | null; projects: { name: string } | null };
+
+async function getLogs(): Promise<Row[]> {
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("daily_logs")
+      .select("*, artists(name), projects(name)")
+      .order("log_date", { ascending: false });
+    return (data as Row[]) ?? [];
+  } catch {
+    return [];
+  }
+}
+
+export default async function DailyPage() {
+  const [logs, artists, projects] = await Promise.all([
+    getLogs(),
+    getArtistsLite(),
+    getProjectsLite(),
+  ]);
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-semibold text-neutral-900">Gunluk Takip</h1>
+        <p className="mt-1 text-sm text-neutral-500">{logs.length} kayit</p>
+      </div>
+
+      <form action={createDailyLog} className="grid gap-3 rounded-2xl border border-neutral-200 bg-white p-5 sm:grid-cols-2">
+        <Select name="artist_id" label="Sanatci *" required options={artists.map((a) => ({ value: a.id, label: a.name }))} />
+        <Select name="project_id" label="Proje" options={projects.map((p) => ({ value: p.id, label: p.name }))} />
+        <Field name="log_date" label="Tarih" type="date" />
+        <Field name="hours" label="Saat" type="number" step="0.5" />
+        <Select name="owner" label="Sahip" options={enumOptions(taskOwnerLabel)} />
+        <Select name="status" label="Durum" options={enumOptions(taskStatusLabel)} />
+        <Select name="priority" label="Oncelik" options={enumOptions(priorityLabel)} />
+        <Field name="next_micro_step" label="Sonraki mikro adim" />
+        <TextArea name="done" label="Yapilanlar" />
+        <TextArea name="todo" label="Yapilacaklar" />
+        <TextArea name="blockers" label="Engeller" />
+        <SubmitButton>Kayit ekle</SubmitButton>
+      </form>
+
+      <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+        <table className="w-full text-sm">
+          <thead className="bg-neutral-50 text-left text-neutral-500">
+            <tr>
+              <th className="px-4 py-3 font-medium">Tarih</th>
+              <th className="px-4 py-3 font-medium">Sanatci</th>
+              <th className="px-4 py-3 font-medium">Proje</th>
+              <th className="px-4 py-3 font-medium">Saat</th>
+              <th className="px-4 py-3 font-medium">Sahip</th>
+              <th className="px-4 py-3 font-medium">Durum</th>
+              <th className="px-4 py-3" />
+            </tr>
+          </thead>
+          <tbody>
+            {logs.length === 0 && (
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-neutral-400">Henuz kayit yok.</td></tr>
+            )}
+            {logs.map((l) => (
+              <tr key={l.id} className="border-t border-neutral-100">
+                <td className="px-4 py-3 text-neutral-600">{l.log_date}</td>
+                <td className="px-4 py-3 font-medium text-neutral-900">{l.artists?.name ?? "-"}</td>
+                <td className="px-4 py-3 text-neutral-600">{l.projects?.name ?? "-"}</td>
+                <td className="px-4 py-3 text-neutral-600">{l.hours}</td>
+                <td className="px-4 py-3 text-neutral-600">{taskOwnerLabel[l.owner]}</td>
+                <td className="px-4 py-3 text-neutral-600">{taskStatusLabel[l.status]}</td>
+                <td className="px-4 py-3 text-right">
+                  <form action={deleteDailyLog}>
+                    <input type="hidden" name="id" value={l.id} />
+                    <button className="text-xs text-red-500 hover:underline">Sil</button>
+                  </form>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
