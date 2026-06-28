@@ -24,7 +24,7 @@ export function Field({
         required={required}
         defaultValue={defaultValue}
         step={step}
-        className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
+        className="mt-1 w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
       />
     </div>
   );
@@ -48,7 +48,7 @@ export function TextArea({
         name={name}
         rows={rows}
         defaultValue={defaultValue}
-        className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
+        className="mt-1 w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
       />
     </div>
   );
@@ -71,7 +71,7 @@ export function Select({
       <select
         name={name}
         required={required}
-        className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
+        className="mt-1 w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
       >
         <option value="">-</option>
         {options.map((o) => (
@@ -87,7 +87,7 @@ export function Select({
 export function SubmitButton({ children }: { children: React.ReactNode }) {
   return (
     <div className="sm:col-span-2">
-      <button className="rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 active:translate-y-px">
+      <button className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-accent-ink active:scale-[0.98]">
         {children}
       </button>
     </div>

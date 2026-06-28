@@ -27,7 +27,7 @@ export default async function LoginPage({
               type="email"
               name="email"
               required
-              className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
+              className="mt-1 w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
               placeholder="ornek@mail.com"
             />
           </div>
@@ -37,7 +37,7 @@ export default async function LoginPage({
               type="password"
               name="password"
               required
-              className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
+              className="mt-1 w-full rounded-xl border border-line bg-surface px-3.5 py-2.5 text-sm text-ink transition focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
             />
           </div>
 
@@ -47,7 +47,7 @@ export default async function LoginPage({
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 active:translate-y-px"
+            className="w-full rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-accent-ink active:scale-[0.98]"
           >
             Giris yap
           </button>

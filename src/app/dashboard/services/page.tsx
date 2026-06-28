@@ -48,7 +48,7 @@ export default async function ServicesPage() {
         </p>
       </div>
 
-      <form action={createService} className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2">
+      <form action={createService} className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2">
         <Select name="artist_id" label="Sanatci *" required options={artists.map((a) => ({ value: a.id, label: a.name }))} />
         <Select name="project_id" label="Proje" options={projects.map((p) => ({ value: p.id, label: p.name }))} />
         <Select name="type" label="Hizmet turu *" required options={enumOptions(serviceTypeLabel)} />
@@ -61,7 +61,7 @@ export default async function ServicesPage() {
         <SubmitButton>Hizmet ekle</SubmitButton>
       </form>
 
-      <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
+      <div className="overflow-x-auto rounded-2xl border border-line bg-surface elevate">
         <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-surface-2 text-left text-muted">
             <tr>

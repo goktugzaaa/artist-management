@@ -33,7 +33,7 @@ export default async function WeeklyPage() {
         <p className="mt-1 text-sm text-muted">{plans.length} kayit</p>
       </div>
 
-      <form action={createWeeklyPlan} className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2">
+      <form action={createWeeklyPlan} className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2">
         <Select name="artist_id" label="Sanatci *" required options={artists.map((a) => ({ value: a.id, label: a.name }))} />
         <Field name="week_start" label="Hafta baslangici *" type="date" required />
         <Field name="planned_hours" label="Planlanan saat" type="number" step="0.5" />
@@ -44,7 +44,7 @@ export default async function WeeklyPage() {
         <SubmitButton>Plan ekle</SubmitButton>
       </form>
 
-      <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
+      <div className="overflow-x-auto rounded-2xl border border-line bg-surface elevate">
         <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-surface-2 text-left text-muted">
             <tr>

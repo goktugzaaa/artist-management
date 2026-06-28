@@ -27,18 +27,18 @@ async function safeCount(table: string): Promise<number> {
 
 function Kpi({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-2xl border border-line bg-surface p-5">
+    <div className="rounded-[20px] border border-line bg-surface elevate p-6">
       <p className="text-[13px] text-muted">{label}</p>
-      <p className="mt-2 text-3xl font-semibold tracking-tight text-ink tnum">{value}</p>
+      <p className="mt-2 text-[34px] font-semibold leading-none tracking-tight text-ink tnum">{value}</p>
     </div>
   );
 }
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border border-line bg-surface p-5">
+    <section className="rounded-[20px] border border-line bg-surface elevate p-6">
       <h2 className="text-sm font-semibold text-ink">{title}</h2>
-      <div className="mt-3">{children}</div>
+      <div className="mt-4">{children}</div>
     </section>
   );
 }

@@ -28,7 +28,7 @@ export function AppShell({
   return (
     <div className="flex min-h-screen bg-canvas">
       {/* Desktop sidebar */}
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col justify-between border-r border-line bg-surface px-4 py-5 lg:flex">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col justify-between border-r border-line bg-surface/70 px-4 py-5 backdrop-blur-xl lg:flex">
         {sidebar}
       </aside>
 

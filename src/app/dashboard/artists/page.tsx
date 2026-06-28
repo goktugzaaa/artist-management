@@ -32,7 +32,7 @@ export default async function ArtistsPage() {
       {/* Create form */}
       <form
         action={createArtist}
-        className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2"
+        className="grid gap-3 rounded-2xl border border-line bg-surface elevate p-5 sm:grid-cols-2"
       >
         <Field name="name" label="Ad *" required />
         <Field name="specialty" label="Uzmanlik" />
@@ -45,18 +45,18 @@ export default async function ArtistsPage() {
           <textarea
             name="notes"
             rows={2}
-            className="mt-1 w-full rounded-lg border border-line px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
+            className="mt-1 w-full rounded-xl border border-line px-3.5 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
           />
         </div>
         <div className="sm:col-span-2">
-          <button className="rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 active:translate-y-px">
+          <button className="rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-accent-ink active:scale-[0.98]">
             Sanatci ekle
           </button>
         </div>
       </form>
 
       {/* List */}
-      <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
+      <div className="overflow-x-auto rounded-2xl border border-line bg-surface elevate">
         <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-surface-2 text-left text-muted">
             <tr>
@@ -118,7 +118,7 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="mt-1 w-full rounded-lg border border-line px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
+        className="mt-1 w-full rounded-xl border border-line px-3.5 py-2.5 text-sm focus:border-accent focus:outline-none focus:ring-4 focus:ring-accent/12"
       />
     </div>
   );

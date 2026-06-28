@@ -38,7 +38,7 @@ export default async function AlertsPage() {
               <li key={a.id}>
                 <Link
                   href={a.href}
-                  className="flex items-center justify-between rounded-2xl border border-line bg-surface p-4 hover:border-line"
+                  className="flex items-center justify-between rounded-2xl border border-line bg-surface elevate p-4 hover:border-line"
                 >
                   <div>
                     <p className="text-sm font-medium text-ink">{a.title}</p>
