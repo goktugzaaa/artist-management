@@ -42,13 +42,13 @@ export default async function ServicesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-neutral-900">Dis Hizmetler</h1>
-        <p className="mt-1 text-sm text-neutral-500">
+        <h1 className="text-2xl font-semibold text-ink">Dis Hizmetler</h1>
+        <p className="mt-1 text-sm text-muted">
           {services.length} kayit · toplam butce {totalBudget.toLocaleString("tr-TR")}
         </p>
       </div>
 
-      <form action={createService} className="grid gap-3 rounded-2xl border border-neutral-200 bg-white p-5 sm:grid-cols-2">
+      <form action={createService} className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2">
         <Select name="artist_id" label="Sanatci *" required options={artists.map((a) => ({ value: a.id, label: a.name }))} />
         <Select name="project_id" label="Proje" options={projects.map((p) => ({ value: p.id, label: p.name }))} />
         <Select name="type" label="Hizmet turu *" required options={enumOptions(serviceTypeLabel)} />
@@ -61,9 +61,9 @@ export default async function ServicesPage() {
         <SubmitButton>Hizmet ekle</SubmitButton>
       </form>
 
-      <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
         <table className="w-full text-sm">
-          <thead className="bg-neutral-50 text-left text-neutral-500">
+          <thead className="bg-surface-2 text-left text-muted">
             <tr>
               <th className="px-4 py-3 font-medium">Tur</th>
               <th className="px-4 py-3 font-medium">Sanatci</th>
@@ -76,16 +76,16 @@ export default async function ServicesPage() {
           </thead>
           <tbody>
             {services.length === 0 && (
-              <tr><td colSpan={7} className="px-4 py-8 text-center text-neutral-400">Henuz hizmet yok.</td></tr>
+              <tr><td colSpan={7} className="px-4 py-8 text-center text-faint">Henuz hizmet yok.</td></tr>
             )}
             {services.map((s) => (
-              <tr key={s.id} className="border-t border-neutral-100">
-                <td className="px-4 py-3 font-medium text-neutral-900">{serviceTypeLabel[s.type]}</td>
-                <td className="px-4 py-3 text-neutral-600">{s.artists?.name ?? "-"}</td>
-                <td className="px-4 py-3 text-neutral-600">{s.vendor ?? "-"}</td>
-                <td className="px-4 py-3 text-neutral-600">{Number(s.budget).toLocaleString("tr-TR")}</td>
-                <td className="px-4 py-3 text-neutral-600">{serviceStatusLabel[s.status]}</td>
-                <td className="px-4 py-3 text-neutral-600">{s.delivery_date ?? "-"}</td>
+              <tr key={s.id} className="border-t border-line">
+                <td className="px-4 py-3 font-medium text-ink">{serviceTypeLabel[s.type]}</td>
+                <td className="px-4 py-3 text-muted">{s.artists?.name ?? "-"}</td>
+                <td className="px-4 py-3 text-muted">{s.vendor ?? "-"}</td>
+                <td className="px-4 py-3 text-muted">{Number(s.budget).toLocaleString("tr-TR")}</td>
+                <td className="px-4 py-3 text-muted">{serviceStatusLabel[s.status]}</td>
+                <td className="px-4 py-3 text-muted">{s.delivery_date ?? "-"}</td>
                 <td className="px-4 py-3 text-right">
                   <form action={deleteService}>
                     <input type="hidden" name="id" value={s.id} />

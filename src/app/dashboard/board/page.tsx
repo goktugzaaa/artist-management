@@ -34,35 +34,35 @@ export default async function BoardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-neutral-900">Pano</h1>
-        <p className="mt-1 text-sm text-neutral-500">Projeler duruma gore — {projects.length} proje</p>
+        <h1 className="text-2xl font-semibold text-ink">Pano</h1>
+        <p className="mt-1 text-sm text-muted">Projeler duruma gore — {projects.length} proje</p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {COLUMNS.map((status) => {
           const items = byStatus(status);
           return (
-            <div key={status} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-3">
+            <div key={status} className="rounded-2xl border border-line bg-surface-2 p-3">
               <div className="flex items-center justify-between px-1 pb-2">
-                <h2 className="text-sm font-semibold text-neutral-700">{projectStatusLabel[status]}</h2>
-                <span className="rounded-full bg-neutral-200 px-2 text-xs text-neutral-600">{items.length}</span>
+                <h2 className="text-sm font-semibold text-muted">{projectStatusLabel[status]}</h2>
+                <span className="rounded-full bg-surface-2 px-2 text-xs text-muted">{items.length}</span>
               </div>
               <div className="space-y-2">
                 {items.length === 0 && (
-                  <p className="px-1 py-4 text-center text-xs text-neutral-300">-</p>
+                  <p className="px-1 py-4 text-center text-xs text-faint">-</p>
                 )}
                 {items.map((p) => (
                   <Link
                     key={p.id}
                     href={`/dashboard/artists/${p.artist_id}`}
-                    className="block rounded-xl border border-neutral-200 bg-white p-3 hover:border-neutral-300"
+                    className="block rounded-xl border border-line bg-surface p-3 hover:border-line"
                   >
                     <div className="flex items-center gap-2">
                       <span className={`h-2 w-2 rounded-full ${PRIORITY_DOT[p.priority]}`} />
-                      <p className="text-sm font-medium text-neutral-900">{p.name}</p>
+                      <p className="text-sm font-medium text-ink">{p.name}</p>
                     </div>
-                    <p className="mt-1 text-xs text-neutral-500">{p.artists?.name ?? "-"}</p>
-                    <div className="mt-2 flex items-center justify-between text-xs text-neutral-400">
+                    <p className="mt-1 text-xs text-muted">{p.artists?.name ?? "-"}</p>
+                    <div className="mt-2 flex items-center justify-between text-xs text-faint">
                       <span>{priorityLabel[p.priority]}</span>
                       <span>{p.deadline ?? "-"}</span>
                     </div>
@@ -74,7 +74,7 @@ export default async function BoardPage() {
         })}
       </div>
 
-      <p className="text-xs text-neutral-400">
+      <p className="text-xs text-faint">
         Surukle-birak ile durum degistirme Supabase baglaninca eklenecek (su an demo salt okunur).
       </p>
     </div>

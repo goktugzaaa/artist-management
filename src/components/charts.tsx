@@ -43,7 +43,7 @@ export function StatusChart({ data }: { data: StatusSlice[] }) {
 
 function Empty() {
   return (
-    <div className="flex h-[240px] items-center justify-center text-sm text-neutral-400">
+    <div className="flex h-[240px] items-center justify-center text-sm text-faint">
       Veri yok.
     </div>
   );

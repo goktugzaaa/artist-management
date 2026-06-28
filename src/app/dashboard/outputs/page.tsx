@@ -40,11 +40,11 @@ export default async function OutputsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-neutral-900">Ciktilar</h1>
-        <p className="mt-1 text-sm text-neutral-500">{outputs.length} kayit</p>
+        <h1 className="text-2xl font-semibold text-ink">Ciktilar</h1>
+        <p className="mt-1 text-sm text-muted">{outputs.length} kayit</p>
       </div>
 
-      <form action={createOutput} className="grid gap-3 rounded-2xl border border-neutral-200 bg-white p-5 sm:grid-cols-2">
+      <form action={createOutput} className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2">
         <Select name="artist_id" label="Sanatci *" required options={artists.map((a) => ({ value: a.id, label: a.name }))} />
         <Select name="project_id" label="Proje" options={projects.map((p) => ({ value: p.id, label: p.name }))} />
         <Select name="type" label="Cikti turu *" required options={enumOptions(outputTypeLabel)} />
@@ -54,9 +54,9 @@ export default async function OutputsPage() {
         <SubmitButton>Cikti ekle</SubmitButton>
       </form>
 
-      <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
         <table className="w-full text-sm">
-          <thead className="bg-neutral-50 text-left text-neutral-500">
+          <thead className="bg-surface-2 text-left text-muted">
             <tr>
               <th className="px-4 py-3 font-medium">Baslik</th>
               <th className="px-4 py-3 font-medium">Tur</th>
@@ -68,15 +68,15 @@ export default async function OutputsPage() {
           </thead>
           <tbody>
             {outputs.length === 0 && (
-              <tr><td colSpan={6} className="px-4 py-8 text-center text-neutral-400">Henuz cikti yok.</td></tr>
+              <tr><td colSpan={6} className="px-4 py-8 text-center text-faint">Henuz cikti yok.</td></tr>
             )}
             {outputs.map((o) => (
-              <tr key={o.id} className="border-t border-neutral-100">
-                <td className="px-4 py-3 font-medium text-neutral-900">{o.title}</td>
-                <td className="px-4 py-3 text-neutral-600">{outputTypeLabel[o.type]}</td>
-                <td className="px-4 py-3 text-neutral-600">{o.artists?.name ?? "-"}</td>
-                <td className="px-4 py-3 text-neutral-600">{taskStatusLabel[o.status]}</td>
-                <td className="px-4 py-3 text-neutral-600">
+              <tr key={o.id} className="border-t border-line">
+                <td className="px-4 py-3 font-medium text-ink">{o.title}</td>
+                <td className="px-4 py-3 text-muted">{outputTypeLabel[o.type]}</td>
+                <td className="px-4 py-3 text-muted">{o.artists?.name ?? "-"}</td>
+                <td className="px-4 py-3 text-muted">{taskStatusLabel[o.status]}</td>
+                <td className="px-4 py-3 text-muted">
                   {o.link ? (
                     <a href={o.link} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                       Ac

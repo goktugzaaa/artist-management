@@ -29,11 +29,11 @@ export default async function WeeklyPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-neutral-900">Haftalik Plan</h1>
-        <p className="mt-1 text-sm text-neutral-500">{plans.length} kayit</p>
+        <h1 className="text-2xl font-semibold text-ink">Haftalik Plan</h1>
+        <p className="mt-1 text-sm text-muted">{plans.length} kayit</p>
       </div>
 
-      <form action={createWeeklyPlan} className="grid gap-3 rounded-2xl border border-neutral-200 bg-white p-5 sm:grid-cols-2">
+      <form action={createWeeklyPlan} className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2">
         <Select name="artist_id" label="Sanatci *" required options={artists.map((a) => ({ value: a.id, label: a.name }))} />
         <Field name="week_start" label="Hafta baslangici *" type="date" required />
         <Field name="planned_hours" label="Planlanan saat" type="number" step="0.5" />
@@ -44,9 +44,9 @@ export default async function WeeklyPage() {
         <SubmitButton>Plan ekle</SubmitButton>
       </form>
 
-      <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
         <table className="w-full text-sm">
-          <thead className="bg-neutral-50 text-left text-neutral-500">
+          <thead className="bg-surface-2 text-left text-muted">
             <tr>
               <th className="px-4 py-3 font-medium">Hafta</th>
               <th className="px-4 py-3 font-medium">Sanatci</th>
@@ -60,21 +60,21 @@ export default async function WeeklyPage() {
           </thead>
           <tbody>
             {plans.length === 0 && (
-              <tr><td colSpan={8} className="px-4 py-8 text-center text-neutral-400">Henuz plan yok.</td></tr>
+              <tr><td colSpan={8} className="px-4 py-8 text-center text-faint">Henuz plan yok.</td></tr>
             )}
             {plans.map((p) => {
               const diff = Number(p.actual_hours) - Number(p.planned_hours);
               return (
-                <tr key={p.id} className="border-t border-neutral-100">
-                  <td className="px-4 py-3 text-neutral-600">{p.week_start}</td>
-                  <td className="px-4 py-3 font-medium text-neutral-900">{p.artists?.name ?? "-"}</td>
-                  <td className="px-4 py-3 text-neutral-600">{p.focus ?? "-"}</td>
-                  <td className="px-4 py-3 text-neutral-600">{p.planned_hours}</td>
-                  <td className="px-4 py-3 text-neutral-600">{p.actual_hours}</td>
+                <tr key={p.id} className="border-t border-line">
+                  <td className="px-4 py-3 text-muted">{p.week_start}</td>
+                  <td className="px-4 py-3 font-medium text-ink">{p.artists?.name ?? "-"}</td>
+                  <td className="px-4 py-3 text-muted">{p.focus ?? "-"}</td>
+                  <td className="px-4 py-3 text-muted">{p.planned_hours}</td>
+                  <td className="px-4 py-3 text-muted">{p.actual_hours}</td>
                   <td className={`px-4 py-3 font-medium ${diff < 0 ? "text-red-500" : "text-green-600"}`}>
                     {diff > 0 ? `+${diff}` : diff}
                   </td>
-                  <td className="px-4 py-3 text-neutral-600">{planStatusLabel[p.status]}</td>
+                  <td className="px-4 py-3 text-muted">{planStatusLabel[p.status]}</td>
                   <td className="px-4 py-3 text-right">
                     <form action={deleteWeeklyPlan}>
                       <input type="hidden" name="id" value={p.id} />

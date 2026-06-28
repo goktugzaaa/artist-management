@@ -65,15 +65,15 @@ export default async function ArtistDetailPage({
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <Link href="/dashboard/artists" className="text-xs text-neutral-400 hover:underline">
+          <Link href="/dashboard/artists" className="text-xs text-faint hover:underline">
             &larr; Sanatcilar
           </Link>
-          <h1 className="mt-1 text-2xl font-semibold text-neutral-900">{artist.name}</h1>
-          <p className="text-sm text-neutral-500">{artist.specialty ?? "Uzmanlik belirtilmemis"}</p>
+          <h1 className="mt-1 text-2xl font-semibold text-ink">{artist.name}</h1>
+          <p className="text-sm text-muted">{artist.specialty ?? "Uzmanlik belirtilmemis"}</p>
         </div>
         <Link
           href={`/dashboard/artists/${id}/edit`}
-          className="rounded-lg border border-neutral-300 px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100"
+          className="rounded-lg border border-line px-3 py-2 text-sm text-muted hover:bg-surface-2"
         >
           Duzenle
         </Link>
@@ -161,8 +161,8 @@ export default async function ArtistDetailPage({
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border border-neutral-200 bg-white p-5">
-      <h2 className="text-sm font-semibold text-neutral-900">{title}</h2>
+    <section className="rounded-2xl border border-line bg-surface p-5">
+      <h2 className="text-sm font-semibold text-ink">{title}</h2>
       <div className="mt-3">{children}</div>
     </section>
   );
@@ -171,22 +171,22 @@ function Card({ title, children }: { title: string; children: React.ReactNode })
 function Info({ label, value }: { label: string; value: string | null }) {
   return (
     <div>
-      <dt className="text-xs text-neutral-400">{label}</dt>
-      <dd className="text-neutral-800">{value || "-"}</dd>
+      <dt className="text-xs text-faint">{label}</dt>
+      <dd className="text-ink">{value || "-"}</dd>
     </div>
   );
 }
 
 function MiniList({ rows }: { rows: { key: string; main: string; sub: string }[] }) {
   if (rows.length === 0) {
-    return <p className="text-sm text-neutral-400">Kayit yok.</p>;
+    return <p className="text-sm text-faint">Kayit yok.</p>;
   }
   return (
     <ul className="space-y-2">
       {rows.map((r) => (
-        <li key={r.key} className="border-b border-neutral-100 pb-2 last:border-0 last:pb-0">
-          <p className="text-sm font-medium text-neutral-800">{r.main}</p>
-          <p className="truncate text-xs text-neutral-500">{r.sub}</p>
+        <li key={r.key} className="border-b border-line pb-2 last:border-0 last:pb-0">
+          <p className="text-sm font-medium text-ink">{r.main}</p>
+          <p className="truncate text-xs text-muted">{r.sub}</p>
         </li>
       ))}
     </ul>

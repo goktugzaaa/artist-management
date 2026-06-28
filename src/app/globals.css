@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
+/* ---- Design tokens (light, gallery-minimal) ---- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --canvas: #f5f3f0;        /* warm paper */
+  --surface: #ffffff;
+  --surface-2: #faf9f7;
+  --ink: #1c1a17;           /* warm near-black */
+  --muted: #6f6962;
+  --faint: #9a948c;
+  --line: #e7e3dd;
+  --accent: #b8553a;        /* terracotta */
+  --accent-ink: #98452f;
+  --accent-soft: #f3e4dd;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* Numbers in tabular form for tidy tables/KPIs */
+.tnum { font-variant-numeric: tabular-nums; }

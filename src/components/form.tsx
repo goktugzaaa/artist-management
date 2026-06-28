@@ -17,14 +17,14 @@ export function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-neutral-700">{label}</label>
+      <label className="block text-[13px] font-medium text-muted">{label}</label>
       <input
         name={name}
         type={type}
         required={required}
         defaultValue={defaultValue}
         step={step}
-        className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-neutral-900 focus:outline-none"
+        className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
       />
     </div>
   );
@@ -43,12 +43,12 @@ export function TextArea({
 }) {
   return (
     <div className="sm:col-span-2">
-      <label className="block text-sm font-medium text-neutral-700">{label}</label>
+      <label className="block text-[13px] font-medium text-muted">{label}</label>
       <textarea
         name={name}
         rows={rows}
         defaultValue={defaultValue}
-        className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-neutral-900 focus:outline-none"
+        className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition placeholder:text-faint focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
       />
     </div>
   );
@@ -67,11 +67,11 @@ export function Select({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-neutral-700">{label}</label>
+      <label className="block text-[13px] font-medium text-muted">{label}</label>
       <select
         name={name}
         required={required}
-        className="mt-1 w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm focus:border-neutral-900 focus:outline-none"
+        className="mt-1 w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink transition focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
       >
         <option value="">-</option>
         {options.map((o) => (
@@ -87,7 +87,7 @@ export function Select({
 export function SubmitButton({ children }: { children: React.ReactNode }) {
   return (
     <div className="sm:col-span-2">
-      <button className="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800">
+      <button className="rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 active:translate-y-px">
         {children}
       </button>
     </div>

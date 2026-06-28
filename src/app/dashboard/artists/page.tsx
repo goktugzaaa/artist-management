@@ -25,14 +25,14 @@ export default async function ArtistsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold text-neutral-900">Sanatcilar</h1>
-        <p className="mt-1 text-sm text-neutral-500">{artists.length} kayit</p>
+        <h1 className="text-2xl font-semibold text-ink">Sanatcilar</h1>
+        <p className="mt-1 text-sm text-muted">{artists.length} kayit</p>
       </div>
 
       {/* Create form */}
       <form
         action={createArtist}
-        className="grid gap-3 rounded-2xl border border-neutral-200 bg-white p-5 sm:grid-cols-2"
+        className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2"
       >
         <Field name="name" label="Ad *" required />
         <Field name="specialty" label="Uzmanlik" />
@@ -41,24 +41,24 @@ export default async function ArtistsPage() {
         <Field name="working_style" label="Calisma Bicimi" />
         <Field name="production_cycle" label="Uretim Dongusu" />
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-neutral-700">Notlar</label>
+          <label className="block text-sm font-medium text-muted">Notlar</label>
           <textarea
             name="notes"
             rows={2}
-            className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-neutral-900 focus:outline-none"
+            className="mt-1 w-full rounded-lg border border-line px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
           />
         </div>
         <div className="sm:col-span-2">
-          <button className="rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800">
+          <button className="rounded-lg bg-ink px-4 py-2 text-sm font-medium text-white transition hover:opacity-90 active:translate-y-px">
             Sanatci ekle
           </button>
         </div>
       </form>
 
       {/* List */}
-      <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
         <table className="w-full text-sm">
-          <thead className="bg-neutral-50 text-left text-neutral-500">
+          <thead className="bg-surface-2 text-left text-muted">
             <tr>
               <th className="px-4 py-3 font-medium">Ad</th>
               <th className="px-4 py-3 font-medium">Uzmanlik</th>
@@ -70,21 +70,21 @@ export default async function ArtistsPage() {
           <tbody>
             {artists.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-neutral-400">
+                <td colSpan={5} className="px-4 py-8 text-center text-faint">
                   Henuz sanatci yok. Yukaridaki formdan ekle.
                 </td>
               </tr>
             )}
             {artists.map((a) => (
-              <tr key={a.id} className="border-t border-neutral-100">
+              <tr key={a.id} className="border-t border-line">
                 <td className="px-4 py-3 font-medium">
-                  <Link href={`/dashboard/artists/${a.id}`} className="text-neutral-900 hover:underline">
+                  <Link href={`/dashboard/artists/${a.id}`} className="text-ink hover:underline">
                     {a.name}
                   </Link>
                 </td>
-                <td className="px-4 py-3 text-neutral-600">{a.specialty ?? "-"}</td>
-                <td className="px-4 py-3 text-neutral-600">{a.email ?? "-"}</td>
-                <td className="px-4 py-3 text-neutral-600">{a.phone ?? "-"}</td>
+                <td className="px-4 py-3 text-muted">{a.specialty ?? "-"}</td>
+                <td className="px-4 py-3 text-muted">{a.email ?? "-"}</td>
+                <td className="px-4 py-3 text-muted">{a.phone ?? "-"}</td>
                 <td className="px-4 py-3 text-right">
                   <form action={deleteArtist}>
                     <input type="hidden" name="id" value={a.id} />
@@ -113,12 +113,12 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-neutral-700">{label}</label>
+      <label className="block text-sm font-medium text-muted">{label}</label>
       <input
         name={name}
         type={type}
         required={required}
-        className="mt-1 w-full rounded-lg border border-neutral-300 px-3 py-2 text-sm focus:border-neutral-900 focus:outline-none"
+        className="mt-1 w-full rounded-lg border border-line px-3 py-2 text-sm focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/15"
       />
     </div>
   );

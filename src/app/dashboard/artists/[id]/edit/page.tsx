@@ -30,13 +30,13 @@ export default async function EditArtistPage({
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <Link href={`/dashboard/artists/${id}`} className="text-xs text-neutral-400 hover:underline">
+        <Link href={`/dashboard/artists/${id}`} className="text-xs text-faint hover:underline">
           &larr; {a.name}
         </Link>
-        <h1 className="mt-1 text-2xl font-semibold text-neutral-900">Sanatci Duzenle</h1>
+        <h1 className="mt-1 text-2xl font-semibold text-ink">Sanatci Duzenle</h1>
       </div>
 
-      <form action={updateArtist} className="grid gap-3 rounded-2xl border border-neutral-200 bg-white p-5 sm:grid-cols-2">
+      <form action={updateArtist} className="grid gap-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-2">
         <input type="hidden" name="id" value={a.id} />
         <Field name="name" label="Ad *" required defaultValue={a.name} />
         <Field name="specialty" label="Uzmanlik" defaultValue={a.specialty ?? ""} />
