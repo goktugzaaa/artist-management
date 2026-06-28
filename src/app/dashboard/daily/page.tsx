@@ -52,8 +52,8 @@ export default async function DailyPage() {
         <SubmitButton>Kayit ekle</SubmitButton>
       </form>
 
-      <div className="overflow-hidden rounded-2xl border border-line bg-surface">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-2xl border border-line bg-surface">
+        <table className="w-full min-w-[640px] text-sm">
           <thead className="bg-surface-2 text-left text-muted">
             <tr>
               <th className="px-4 py-3 font-medium">Tarih</th>
